@@ -53,6 +53,7 @@ cp envs/examples/dashboard.example.env envs/dashboard.env
 change super admin credentials or leave the default
 
 ```sh
+# envs/backend.env
 SUPER_USER_EMAIL=superadmin@gmail.com
 SUPER_USER_PASSWORD=superadmin
 ```
@@ -60,6 +61,7 @@ SUPER_USER_PASSWORD=superadmin
 optionally set email configuration
 
 ```sh
+# envs/backend.env
 SMTP_HOST=
 SMTP_PORT=
 SMTP_USER=
