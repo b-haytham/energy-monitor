@@ -1,0 +1,7 @@
+envs/*
+
+config/*
+
+
+!config/examples
+!envs/examples

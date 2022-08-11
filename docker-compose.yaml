@@ -1,0 +1,57 @@
+version: "3.8"
+services:
+  mongo:
+    container_name: mongodb
+    restart: unless-stopped	
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_REPLICA_SET_NAME: ${MONGO_REPLICA_SET_NAME:-rs0}
+
+    healthcheck:
+      test: test $$(echo "rs.initiate().ok || rs.status().ok" | mongo  --quiet) -eq 1
+      interval: 10s
+      start_period: 30s
+    command: ["--replSet", "${MONGO_REPLICA_SET_NAME:-rs0}", "--bind_ip_all"]
+
+  hivemq:
+    container_name: hivemq
+    restart: unless-stopped	
+    image: bhaytham/energy-monitor-hivemq:latest
+    network_mode: host
+    env_file:
+      - ./envs/hivemq.env
+   #ports:
+   #  - 1883:1883
+   #  - 8080:8080
+  
+  redis:
+    container_name: redis
+    image: redis:latest
+    ports:
+      - 6379:6379 
+
+  backend:
+    container_name: backend
+    restart: unless-stopped	
+    image: bhaytham/energy-monitor-backend:latest
+    network_mode: host
+    env_file: ./envs/backend.env
+    depends_on:
+      - mongo
+      - hivemq
+      - redis
+    ports:
+      - 3000:3000 
+
+  web:
+    container_name: web
+    restart: unless-stopped	
+    image: bhaytham/energy-monitor-web:latest
+    network_mode: host
+    env_file: ./envs/dashboard.env
+    depends_on:
+      - backend  
+    ports:
+      - 3001:3001 
