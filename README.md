@@ -35,7 +35,7 @@ Energy Monitor is an application to process, analyze, store and monitor energy u
 ### Installing
 
 ```sh
-git clone --recurcive https://github.com/b-haytham/energy-monitor 
+git clone --recurse-submodules https://github.com/b-haytham/energy-monitor 
 ```
 
 ### Run
