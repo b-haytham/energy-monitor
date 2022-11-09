@@ -49,7 +49,7 @@ cp envs/examples/cli.example.env envs/cli.env
 
 ### copy config file
 ```sh
-cp config/examples/seed_config.yaml config/seed_config.example.yaml
+cp config/examples/seed_config.example.yaml config/seed_config.yaml
 ```
 
 ### update config file 
@@ -93,7 +93,7 @@ devices:
 ### run 
 
 ```sh
-docker run --env-file=envs/cli.env -v $(pwd)/config:/app/configs bhaytham/energy-monitor-cli db seed 
+docker run --env-file=envs/cli.env -v $(pwd)/config:/app/configs --network host bhaytham/energy-monitor-cli db seed 
 ```
 refresh the page.
 <br>
@@ -102,7 +102,7 @@ you can insert values for multiple devices in parallel. just add another entry a
 ### delete inserted values
 
 ```sh
-docker run --env-file=envs/cli.env -v $(pwd)/config:/app/configs bhaytham/energy-monitor-cli db drop
+docker run --env-file=envs/cli.env -v $(pwd)/config:/app/configs --network host bhaytham/energy-monitor-cli db drop
 ```
 
 
@@ -170,7 +170,7 @@ the config above will be converted by the cli to a json format and will be sent 
 ### run
 
 ```sh
-docker run --env-file=envs/cli.env -v $(pwd)/config:/app/configs bhaytham/energy-monitor-cli mqtt publish  
+docker run --env-file=envs/cli.env -v $(pwd)/config:/app/configs --network host bhaytham/energy-monitor-cli mqtt pub  
 ```
 
 Alternatively you can use other mqtt clients. (ex: [mosquito_pub](https://mosquitto.org/man/mosquitto_pub-1.html)).
